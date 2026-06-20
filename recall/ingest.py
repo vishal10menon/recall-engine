@@ -1,4 +1,5 @@
 from recall.memory import store_session, store_file
+from recall.perception import capture_environment
 
 def ingest_session(session_id, decisions, bugs_fixed, code_changes=None, files_modified=None):
     messages = []
@@ -10,6 +11,9 @@ def ingest_session(session_id, decisions, bugs_fixed, code_changes=None, files_m
         messages.append({"role": "user", "content": f"Code changes: {'; '.join(code_changes)}"})
     if files_modified:
         messages.append({"role": "user", "content": f"Files modified: {', '.join(files_modified)}"})
+    perception = capture_environment()
+    if "error" not in perception:
+        messages.append({"role": "user", "content": f"Workspace perception: {perception}"})
     return store_session(session_id, messages)
 
 def ingest_docs(file_paths):
