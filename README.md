@@ -12,6 +12,10 @@ every decision, every bug fix, every architectural choice gets stored. before th
 
 built on [Enter Pro](https://dbed433cafdf417abe2cb15bcacdb53d.prod.enterapp.pro/) and [Afferens](https://afferens.com) for real-time physical perception.
 
+## live demo
+
+**https://enter.converge.ai/project/f52d0594a02744348cb0f975caca47bc?layout=session-chat-preview&chat_id=46d1784c-84bf-4882-ba18-c7503c7e5705&surface=preview**
+
 ## how it works
 
 1. **session ends** -> decisions and fixes get ingested into Parcle
