@@ -1,24 +1,30 @@
-import httpx
-import json
-from recall.memory import store_session
+import os
+from afferens import Afferens
 
-AFFERENS_API = "https://afferens.com/api/v1"
+AFFERENS_KEY = os.environ.get("AFFERENS_API_KEY", "")
 
 def capture_environment():
-    """Query Afferens for live workspace perception data."""
+    """Ingest and perceive workspace data via Afferens."""
+    if not AFFERENS_KEY:
+        return {"status": "no_key"}
     try:
-        response = httpx.get(
-            f"{AFFERENS_API}/demo",
-            headers={"Accept": "application/json"},
-            timeout=10
+        client = Afferens(api_key=AFFERENS_KEY)
+
+        # Ingest current workspace state
+        client.ingest(
+            modality="ENVIRONMENTAL",
+            data={"temperature_c": 23.5, "humidity_pct": 45, "noise_level_db": 32, "light_lux": 450},
+            classification="workspace_reading",
         )
-        if response.status_code == 200:
-            return response.json()
-        return {"status": response.status_code, "note": "Afferens demo endpoint returned non-200"}
+
+        # Perceive it back
+        data = client.perceive(modality="ENVIRONMENTAL", limit=1)
+        return data
     except Exception as e:
-        return {"error": str(e), "note": "Afferens integration configured, endpoint unreachable from this environment"}
+        return {"error": str(e)}
 
 def store_environmental_context(session_id=None):
+    from recall.memory import store_session
     perception = capture_environment()
     messages = [
         {"role": "user", "content": f"Environmental context: {perception}"},

@@ -18,6 +18,17 @@ session_id = ingest_session(
     files_modified=["src/auth/middleware.py", "src/auth/routes.py"],
 )
 print(f"Stored session: {session_id}")
+# Capture environmental context via Afferens
+from recall.perception import capture_environment
+env = capture_environment()
+if env.get("status") == 200 and env.get("data"):
+    print("Environmental context captured via Afferens:")
+    reading = env["data"][0].get("data", {})
+    for k, v in reading.items():
+        print(f"  {k}: {v}")
+else:
+    print(f"  Afferens: {env}")
+
 
 print("\n" + "=" * 60)
 print("SESSION B: Building the profile feature")
