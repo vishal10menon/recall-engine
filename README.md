@@ -112,6 +112,14 @@ this is what makes the "sentient engineer" framing literal. the agent perceives 
 - Python
 - React
 
+## What I Learned
+
+The hardest part was getting Parcle's search to return relevant results with messy session data. Early confidence scores were unreliable until I added pre-processing to clean input before ingestion. The 92-98% confidence range you see in the demo is real, not hardcoded.
+
+Conflict detection was an afterthought that turned out to be the most interesting feature. When you store contradictory decisions across sessions, the agent can surface both and flag the tension. That's something basic search doesn't give you, and it's the beginning of agents that actually understand code evolution, not just code snapshots.
+
+Afferens integration taught me that physical context matters more than I expected. Knowing *where* you were when you made a decision adds a layer that pure code history can't capture.
+
 ## license
 
 MIT
