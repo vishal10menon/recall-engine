@@ -42,3 +42,53 @@ ingest_session(
     files_modified=["src/auth/routes.py"],
 )
 print("Fix recorded.")
+
+
+print("\n" + "=" * 60)
+print("SESSION D: Conflict Detection")
+print("=" * 60)
+
+# Store an original auth decision
+ingest_session(
+    session_id=None,
+    decisions=[
+        "Decided to use JWT tokens with 24-hour access expiry and 7-day refresh expiry",
+        "Stateless auth, no server-side sessions",
+    ],
+    bugs_fixed=[],
+    files_modified=["src/auth/middleware.py"],
+)
+
+# Store a contradictory decision
+ingest_session(
+    session_id=None,
+    decisions=[
+        "Switched from JWT to session-based auth with server-side cookie storage",
+        "Using Express sessions with Redis backend instead of tokens",
+    ],
+    bugs_fixed=[],
+    files_modified=["src/auth/middleware.py", "src/auth/sessions.js"],
+)
+
+# Search for the auth pattern and check for contradictions
+result = recall("What auth pattern are we using?")
+answer = result["answer"]
+conf = result["confidence"]
+
+print(f"Query: 'What auth pattern are we using?'")
+print(f"Memory recall: {answer}")
+print(f"Confidence: {conf:.0%}")
+
+# Simple conflict detection
+answer_lower = answer.lower()
+has_jwt = "jwt" in answer_lower
+has_session = ("session" in answer_lower and ("cookie" in answer_lower or "redis" in answer_lower))
+
+if has_jwt and has_session:
+    print()
+    print(">>> CONFLICT DETECTED: Contradictory auth decisions found.")
+    print(">>> Agent found both JWT-based AND session-based auth references.")
+    print(">>> Recommendation: Reconcile before proceeding.")
+else:
+    print()
+    print("No conflict detected. Latest decision dominates.")
