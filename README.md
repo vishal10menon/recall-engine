@@ -56,7 +56,7 @@ recall/
   perception.py   # afferens workspace perception
   config.py       # team/project settings
 demo/
-  run_demo.py     # full 3-session demo
+  run_demo.py     # full 4-session demo
 ```
 
 ## running the demo
@@ -65,7 +65,7 @@ demo/
 PYTHONPATH=. python demo/run_demo.py
 ```
 
-walks through 3 sessions: build a feature, build another that depends on the first, then debug a bug that relates back. this is the part that actually blew my mind when i first saw it work.
+walks through 4 sessions: build a feature, build another that depends on the first, then debug a bug that relates back. this is the part that actually blew my mind when i first saw it work.
 
 ## tool integration
 
@@ -103,6 +103,8 @@ this is what makes the "sentient engineer" framing literal. the agent perceives 
 **Session B** - weeks later, team builds a profile feature. agent queries Parcle, recalls the auth pattern from Session A with **92% confidence**, applies the same architecture.
 
 **Session C** - bug: users logged out randomly. agent recalls token expiry decision from Session A with **98% confidence**, identifies the root cause: token refresh rotation was missing.
+
+**Session D** - conflicting decisions. team switches from JWT to session-based auth in a later session. agent detects the contradiction and flags it, recommending reconciliation before proceeding. this is the "we didn't think of that" moment.
 
 ## stack
 
