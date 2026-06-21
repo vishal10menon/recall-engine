@@ -98,7 +98,7 @@ this is what makes the "sentient engineer" framing literal. the agent perceives 
 
 ## demo walkthrough
 
-**Session A** - team builds authentication. decisions: JWT, 24h expiry, httpOnly cookies. a CORS bug fix also gets ingested into Parcle.
+**Session A** - team builds authentication. decisions: JWT, 24h expiry, httpOnly cookies. Afferens captures the workspace environment: temperature, humidity, noise level, lighting. both code decisions and physical context get stored together.
 
 **Session B** - weeks later, team builds a profile feature. agent queries Parcle, recalls the auth pattern from Session A with **92% confidence**, applies the same architecture.
 
